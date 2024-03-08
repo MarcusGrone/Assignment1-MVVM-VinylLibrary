@@ -7,6 +7,6 @@ public interface VinylState
   void borrowVinyl(Vinyl vinyl);
   void returnVinyl(Vinyl vinyl);
   void removeVinyl(Vinyl vinyl);
-
+  String toString();
 
 }

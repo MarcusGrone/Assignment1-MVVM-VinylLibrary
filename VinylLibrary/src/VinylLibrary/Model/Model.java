@@ -1,6 +1,7 @@
 package VinylLibrary.Model;
 
 import VinylLibrary.Util.PropertyChangeSubject;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -15,7 +16,6 @@ public class Model implements PropertyChangeSubject, Runnable
 {
   private PropertyChangeSupport support;
   private List<Vinyl> vinylList;
-  private Vinyl vinyl;
 
   public Model()
   {
@@ -26,14 +26,14 @@ public class Model implements PropertyChangeSubject, Runnable
 
     for (int i = 0; i < 25; i++)
     {
-      String title = "Viny l" + (i + 1);
+      String title = "Vinyl " + (i + 1);
       String artist = "Artist " + (i + 1);
       int releaseYear = random.nextInt(134) + 1890;
 
       vinylList.add(new Vinyl(title, artist, releaseYear));
     }
-  }
 
+  }
 
   public void addVinyl(String title, String artist, int releaseYear)
   {
@@ -45,7 +45,7 @@ public class Model implements PropertyChangeSubject, Runnable
 
   public List<Vinyl> getVinyls()
   {
-    return new ArrayList<>(vinylList);
+    return vinylList;
   }
 
   @Override public void run()
@@ -63,41 +63,51 @@ public class Model implements PropertyChangeSubject, Runnable
     }
   }
 
-  public void setUserID(int userID) {
-    for (Vinyl vinyl : vinylList) {
-      vinyl.setUserID(userID);
+  public void setUserID(int userID, Vinyl selectedVinyl)
+  {
+    if (selectedVinyl != null)
+    {
+      selectedVinyl.setUserID(userID);
+      support.firePropertyChange("VinylListUpdated", null, vinylList);
+      support.firePropertyChange("UserIDSet", null, userID);
+      System.out.println("UserID has been set: " + userID);
     }
-    support.firePropertyChange("UserIDSet", null, userID);
-    System.out.println("UserID has been set: " + userID);
+    else
+    {
+      System.out.println("No vinyl selected to set UserID.");
+    }
   }
 
-
-  public void onButtonBorrowPressed()
+  public void onButtonBorrowPressed(Vinyl vinyl)
   {
     vinyl.borrowVinyl();
+
+    support.firePropertyChange("VinylListUpdated", null, vinylList);
   }
 
-
-  public void onButtonReturnPressed()
-  {vinyl.returnVinyl();
+  public void onButtonReturnPressed(Vinyl vinyl)
+  {
+    vinyl.returnVinyl();
+    support.firePropertyChange("VinylListUpdated", null, vinylList);
   }
 
-
-  public void onButtonReservePressed()
+  public void onButtonReservePressed(Vinyl vinyl)
   {
     vinyl.reserveVinyl();
+
+    support.firePropertyChange("VinylListUpdated", null, vinylList);
   }
 
-
-  public void onButtonUnReservePressed()
+  public void onButtonUnReservePressed(Vinyl vinyl)
   {
     vinyl.unReserveVinyl();
+    support.firePropertyChange("VinylListUpdated", null, vinylList);
   }
 
-
-  public void onButtonRemovePressed()
+  public void onButtonRemovePressed(Vinyl vinyl)
   {
     vinyl.removeVinyl();
+    support.firePropertyChange("VinylListUpdated", null, vinylList);
   }
 
 
@@ -128,6 +138,5 @@ public class Model implements PropertyChangeSubject, Runnable
   {
     support.removePropertyChangeListener(name, listener);
   }
-
 
 }

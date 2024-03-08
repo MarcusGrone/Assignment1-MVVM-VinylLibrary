@@ -33,4 +33,10 @@ public class BorrowedState implements VinylState
   {
     System.out.println("Vinyl cannot be rerminated, as it is borrowed.");
   }
+
+  @Override public String toString()
+  {
+    return "Borrowed";
+  }
+
 }

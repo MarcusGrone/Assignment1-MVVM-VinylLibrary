@@ -55,6 +55,11 @@ public class ReservedState implements VinylState
   {
     System.out.println("Vinyl cannot be removed, as it is reserved");
   }
+
+  @Override public String toString()
+  {
+    return "Reserved";
+  }
 }
 
 

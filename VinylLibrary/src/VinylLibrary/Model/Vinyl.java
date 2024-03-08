@@ -11,6 +11,7 @@ public class Vinyl
   private String artist;
   private int releaseYear;
   private boolean reservedVinyl;
+  
 
   public Vinyl(String title, String artist, int releaseYear)
   {
@@ -41,9 +42,9 @@ public class Vinyl
     return artist;
   }
 
-  public int getReleaseYear()
+  public String getReleaseYear()
   {
-    return releaseYear;
+    return String.valueOf(releaseYear);
   }
 
   public void reserveVinyl()
@@ -110,7 +111,6 @@ public class Vinyl
       this.reservedVinyl = reservedVinyl;
     }
     System.out.println("Vinyl is already reserved");
-    }
-
+  }
 
 }

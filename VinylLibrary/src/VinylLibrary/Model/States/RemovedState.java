@@ -32,6 +32,11 @@ public class RemovedState implements VinylState
   @Override public void removeVinyl(Vinyl vinyl)
   {    System.out.println("Vinyl is unreachable at this moment, at it has been terminated from Library");
 
-
   }
+
+  @Override public String toString()
+  {
+    return "Removed";
+  }
+
 }

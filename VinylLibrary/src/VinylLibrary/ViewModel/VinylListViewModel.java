@@ -24,7 +24,6 @@ public class VinylListViewModel
 
   public VinylListViewModel(Model model)
   {
-
     userID = new SimpleStringProperty();
     title = new SimpleStringProperty();
     artist = new SimpleStringProperty();
@@ -36,11 +35,11 @@ public class VinylListViewModel
     vinyls = FXCollections.observableArrayList();
     model.addPropertyChangeListener("VinylAdded", this::Update);
     refresh();
+    model.addPropertyChangeListener("VinylListUpdated", this::Update);
   }
 
-  public void setUserID()
-  {
-    model.setUserID(Integer.parseInt(userID.get()));
+  public void setUserID(int userID, Vinyl selectedVinyl) {
+    model.setUserID(userID, selectedVinyl);
   }
 
   public void addVinyl() {
@@ -48,70 +47,35 @@ public class VinylListViewModel
       model.addVinyl(title.get(), artist.get(), Integer.parseInt(releaseYear.get()));
       refresh();
     } else {
-      System.out.println("Release year has not been provided.");
+      System.out.println("Vinyl's has been added");
     }
   }
 
-  public StringProperty userIDProperty()
+
+
+  public void borrowPressed(Vinyl selectedVinyl)
   {
-    return userID;
+model.onButtonBorrowPressed(selectedVinyl);
   }
 
-  public StringProperty titleProperty()
+  public void returnPressed(Vinyl selectedVinyl)
   {
-    return title;
+    model.onButtonReturnPressed(selectedVinyl);
   }
 
-  public StringProperty artistProperty()
+  public void reservePressed(Vinyl selectedVinyl)
   {
-    return artist;
+    model.onButtonReservePressed(selectedVinyl);
   }
 
-  public StringProperty releaseYearProperty()
+  public void unReservePressed(Vinyl selectedVinyl)
   {
-    return releaseYear;
+    model.onButtonUnReservePressed(selectedVinyl);
   }
 
-  public StringProperty vinylStateProperty()
+  public void removePressed(Vinyl selectedVinyl)
   {
-
-    return vinylState;
-  }
-
-  public StringProperty reservedProperty()
-  {
-    return reserved;
-  }
-
-  public StringProperty removedProperty()
-  {
-    return removed;
-  }
-
-
-  public void borrowPressed()
-  {
-    model.onButtonBorrowPressed();
-  }
-
-  public void returnPressed()
-  {
-    model.onButtonReturnPressed();
-  }
-
-  public void reservePressed()
-  {
-    model.onButtonReservePressed();
-  }
-
-  public void unReservePressed()
-  {
-    model.onButtonUnReservePressed();
-  }
-
-  public void removePressed()
-  {
-    model.onButtonRemovePressed();
+    model.onButtonRemovePressed(selectedVinyl);
   }
 
   public ObservableList<Vinyl> getVinyls()
@@ -123,6 +87,7 @@ public class VinylListViewModel
   {
     vinyls.clear();
     vinyls.addAll(model.getVinyls());
+
   }
 
   private void Update(PropertyChangeEvent propertyChangeEvent)
@@ -130,6 +95,7 @@ public class VinylListViewModel
     List<Vinyl> newVinyls = (List<Vinyl>) propertyChangeEvent.getNewValue();
     vinyls.clear();
     vinyls.addAll(newVinyls);
+
   }
 
 }
