@@ -52,11 +52,11 @@ public class VinylLibraryView
         new PropertyValueFactory<Vinyl, String>("userID"));
     Removed.setCellValueFactory(
         new PropertyValueFactory<Vinyl, String>("userID"));
-    vinylListView.setOnMouseClicked((MouseEvent event) -> {
-      if (event.getButton().equals(MouseButton.PRIMARY))
-      {
-        selectedVinyl = vinylListView.getSelectionModel().getSelectedItem();
-      }
+     vinylListView.setOnMouseClicked((MouseEvent event) -> {
+          if (event.getButton().equals(MouseButton.PRIMARY))
+          {
+            selectedVinyl = vinylListView.getSelectionModel().getSelectedItem();
+          }
     });
     vinylListView.setItems(vinylListViewModel.getVinyls());
     vinylListViewModel.addVinyl();
