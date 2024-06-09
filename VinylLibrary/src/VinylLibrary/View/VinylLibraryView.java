@@ -1,10 +1,7 @@
 package VinylLibrary.View;
 
 import VinylLibrary.Model.Vinyl;
-import VinylLibrary.Model.VinylState;
 import VinylLibrary.ViewModel.VinylListViewModel;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
